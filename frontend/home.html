@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>PratoDoDia - Ofertas</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; background-color: #f4f7f6; }
+        header { background-color: #6d8a3f; color: white; padding: 20px; text-align: center; }
+        .container { max-width: 800px; margin: 20px auto; padding: 0 20px; }
+        .card { background: white; padding: 20px; border-radius: 8px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
+        .badge { background-color: #ff4d4d; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; }
+        .btn-reserva { background-color: #6d8a3f; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <header><h1>Ofertas do Dia perto de Ti</h1></header>
+    <div class="container">
+        <div class="card">
+            <div>
+                <h3>Padaria Central - Kit de Pães e Doces</h3>
+                <p>De: <del>R$ 30,00</del> por <strong>R$ 12,00</strong></p>
+                <span class="badge">Restam apenas 2 caixas!</span>
+            </div>
+            <button class="btn-reserva" onclick="alert('Reserva realizada com sucesso!')">Reservar</button>
+        </div>
+    </div>
+</body>
+</html>
