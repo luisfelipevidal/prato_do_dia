@@ -2,26 +2,61 @@
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <title>PratoDoDia - Ofertas</title>
+    <title>PratoDoDia - Ofertas Disponíveis</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; background-color: #f4f7f6; }
-        header { background-color: #6d8a3f; color: white; padding: 20px; text-align: center; }
+        body { font-family: Arial, sans-serif; margin: 0; background-color: #f4f7f6; color: #333; }
+        header { background-color: #6d8a3f; color: white; padding: 20px; text-align: center; position: relative; }
+        .logout-btn { position: absolute; right: 20px; top: 25px; color: white; text-decoration: none; border: 1px solid white; padding: 5px 10px; border-radius: 4px; font-size: 14px; }
         .container { max-width: 800px; margin: 20px auto; padding: 0 20px; }
+        .sub-title { color: #556c32; margin-bottom: 20px; font-size: 18px; }
         .card { background: white; padding: 20px; border-radius: 8px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
-        .badge { background-color: #ff4d4d; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; }
-        .btn-reserva { background-color: #6d8a3f; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; }
+        .info-box { max-width: 70%; }
+        .card h3 { margin: 0 0 8px 0; color: #222; }
+        .card p { margin: 5px 0; color: #666; }
+        .price { font-size: 16px; }
+        .badge { display: inline-block; background-color: #ff4d4d; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; margin-top: 8px; }
+        .badge-orange { background-color: #ff9800; }
+        .btn-reserva { background-color: #6d8a3f; color: white; border: none; padding: 12px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .btn-reserva:hover { background-color: #556c32; }
     </style>
 </head>
 <body>
-    <header><h1>Ofertas do Dia perto de Ti</h1></header>
+    <header>
+        <h1>Ofertas do Dia</h1>
+        <a href="login.html" class="logout-btn">Sair</a>
+    </header>
+    
     <div class="container">
+        <p class="sub-title">📍 Exibindo caixas surpresa disponíveis na sua região:</p>
+        
         <div class="card">
-            <div>
-                <h3>Padaria Central - Kit de Pães e Doces</h3>
-                <p>De: <del>R$ 30,00</del> por <strong>R$ 12,00</strong></p>
+            <div class="info-box">
+                <h3>🍞 Padaria Central</h3>
+                <p><strong>Descrição:</strong> Mix de pães artesanais, croissants e doces assados no dia.</p>
+                <p class="price">De: <del>R$ 35,00</del> por <strong>R$ 12,50</strong></p>
                 <span class="badge">Restam apenas 2 caixas!</span>
             </div>
-            <button class="btn-reserva" onclick="alert('Reserva realizada com sucesso!')">Reservar</button>
+            <button class="btn-reserva" onclick="alert('Reserva realizada com sucesso na Padaria Central!')">Reservar</button>
+        </div>
+
+        <div class="card">
+            <div class="info-box">
+                <h3>🍎 Sacolão Boa Vista</h3>
+                <p><strong>Descrição:</strong> Caixa com frutas e verduras selecionadas (perfeitas para consumo imediato).</p>
+                <p class="price">De: <del>R$ 40,00</del> por <strong>R$ 15,00</strong></p>
+                <span class="badge badge-orange">Restam 5 caixas</span>
+            </div>
+            <button class="btn-reserva" onclick="alert('Reserva realizada com sucesso no Sacolão Boa Vista!')">Reservar</button>
+        </div>
+
+        <div class="card">
+            <div class="info-box">
+                <h3>🍣 Sushi Takeaway</h3>
+                <p><strong>Descrição:</strong> Combinado variado de sushis e combinados preparados no almoço.</p>
+                <p class="price">De: <del>R$ 70,00</del> por <strong>R$ 25,00</strong></p>
+                <span class="badge">Resta apenas 1 caixa!</span>
+            </div>
+            <button class="btn-reserva" onclick="alert('Reserva realizada com sucesso no Sushi Takeaway!')">Reservar</button>
         </div>
     </div>
 </body>
