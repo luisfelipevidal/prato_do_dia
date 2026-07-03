@@ -1,30 +1,49 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PratoDoDia - Login e Cadastro</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .login-card { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 320px; text-align: center; }
-        h2 { color: #6d8a3f; margin-bottom: 24px; }
-        input { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background-color: #6d8a3f; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; margin-top: 12px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        .login-container { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); width: 100%; max-width: 360px; text-align: center; }
+        h1 { color: #6d8a3f; margin-bottom: 8px; font-size: 28px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        p.subtitle { color: #666; font-size: 14px; margin-bottom: 24px; }
+        .input-group { margin-bottom: 16px; text-align: left; }
+        label { display: block; font-size: 12px; color: #555; margin-bottom: 6px; font-weight: 600; }
+        input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; outline: none; transition: border 0.2s; }
+        input:focus { border-color: #6d8a3f; }
+        button { width: 100%; padding: 12px; background-color: #6d8a3f; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: bold; margin-top: 8px; transition: background 0.2s; }
         button:hover { background-color: #556c32; }
-        .btn-cadastro { background-color: transparent; color: #6d8a3f; border: 1px solid #6d8a3f; margin-top: 8px; }
+        .divider { margin: 20px 0; color: #aaa; font-size: 12px; position: relative; text-align: center; }
+        .divider::before, .divider::after { content: ""; position: absolute; top: 50%; width: 40%; height: 1px; background: #ddd; }
+        .divider::before { left: 0; }
+        .divider::after { right: 0; }
+        .btn-cadastro { background-color: transparent; color: #6d8a3f; border: 2px solid #6d8a3f; margin-top: 0; }
         .btn-cadastro:hover { background-color: #eef2eb; }
-        .divider { margin: 16px 0; color: #aaa; font-size: 14px; }
     </style>
 </head>
 <body>
-    <div class="login-card">
-        <h2>🍽️ PratoDoDia</h2>
-        <input type="email" placeholder="E-mail">
-        <input type="password" placeholder="Senha">
+    <div class="login-container">
+        <h1>🍽️ PratoDoDia</h1>
+        <p class="subtitle">Sua escolha sustentável e econômica</p>
+        
+        <div class="input-group">
+            <label>E-MAIL</label>
+            <input type="email" placeholder="exemplo@email.com">
+        </div>
+        
+        <div class="input-group">
+            <label>SENHA</label>
+            <input type="password" placeholder="Sua senha secreta">
+        </div>
+        
         <button onclick="window.location.href='home.html'">Entrar</button>
         
-        <div class="divider">ou</div>
+        <div class="divider">OU</div>
         
-        <button class="btn-cadastro" onclick="alert('Funcionalidade de cadastro: Aqui o usuário digitaria Nome, E-mail e Senha para salvar no banco de dados.')">Cadastrar-se</button>
+        <button class="btn-cadastro" onclick="alert('Sistema de Cadastro: Redirecionando para o formulário de novos usuários.')">Criar Nova Conta</button>
     </div>
 </body>
 </html>
