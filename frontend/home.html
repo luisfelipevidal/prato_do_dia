@@ -1,63 +1,133 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>PratoDoDia - Ofertas Disponíveis</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PratoDoDia - Painel de Ofertas</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; background-color: #f4f7f6; color: #333; }
-        header { background-color: #6d8a3f; color: white; padding: 20px; text-align: center; position: relative; }
-        .logout-btn { position: absolute; right: 20px; top: 25px; color: white; text-decoration: none; border: 1px solid white; padding: 5px 10px; border-radius: 4px; font-size: 14px; }
-        .container { max-width: 800px; margin: 20px auto; padding: 0 20px; }
-        .sub-title { color: #556c32; margin-bottom: 20px; font-size: 18px; }
-        .card { background: white; padding: 20px; border-radius: 8px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
-        .info-box { max-width: 70%; }
-        .card h3 { margin: 0 0 8px 0; color: #222; }
-        .card p { margin: 5px 0; color: #666; }
-        .price { font-size: 16px; }
-        .badge { display: inline-block; background-color: #ff4d4d; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; margin-top: 8px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f4f7f6; color: #333; display: flex; flex-direction: column; min-height: 100vh; }
+        
+        /* Navbar Superior */
+        nav { background-color: #6d8a3f; color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        nav .logo { font-size: 22px; font-weight: bold; cursor: pointer; }
+        nav .nav-links { display: flex; gap: 20px; align-items: center; }
+        nav a { color: white; text-decoration: none; font-size: 15px; }
+        nav a:hover { text-decoration: underline; }
+        .btn-logout { background: transparent; border: 1px solid white; padding: 6px 12px; border-radius: 4px; color: white; cursor: pointer; transition: 0.2s; }
+        .btn-logout:hover { background: white; color: #6d8a3f; }
+
+        /* Container Principal */
+        .main-content { max-width: 900px; width: 100%; margin: 30px auto; padding: 0 20px; flex: 1; }
+        
+        /* Barra de Busca */
+        .search-container { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.04); margin-bottom: 25px; display: flex; gap: 10px; }
+        .search-container input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 4px; outline: none; }
+        .search-container button { background: #6d8a3f; color: white; border: none; padding: 0 20px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+
+        .section-title { font-size: 18px; color: #556c32; margin-bottom: 15px; font-weight: 600; }
+
+        /* Cards de Ofertas */
+        .card { background: white; padding: 20px; border-radius: 8px; margin-bottom: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); display: flex; justify-content: space-between; align-items: center; transition: transform 0.2s; }
+        .card:hover { transform: translateY(-2px); }
+        .info-side { max-width: 70%; }
+        .card h3 { color: #222; font-size: 18px; margin-bottom: 6px; }
+        .card .desc { color: #666; font-size: 14px; margin-bottom: 10px; line-height: 1.4; }
+        .card .prices { font-size: 15px; margin-bottom: 8px; }
+        .card del { color: #999; }
+        .card strong { color: #6d8a3f; font-size: 17px; }
+        
+        /* Badges de Estoque */
+        .badge { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; color: white; }
+        .badge-red { background-color: #ff4d4d; }
         .badge-orange { background-color: #ff9800; }
-        .btn-reserva { background-color: #6d8a3f; color: white; border: none; padding: 12px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; }
-        .btn-reserva:hover { background-color: #556c32; }
+
+        .btn-action { background-color: #6d8a3f; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: background 0.2s; }
+        .btn-action:hover { background-color: #556c32; }
+
+        /* Janela Pop-up (Modal de Confirmação) */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000; }
+        .modal-box { background: white; padding: 30px; border-radius: 8px; max-width: 400px; width: 90%; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+        .modal-box h2 { color: #6d8a3f; margin-bottom: 12px; }
+        .modal-box p { color: #555; font-size: 14px; margin-bottom: 20px; line-height: 1.5; }
+        .modal-close-btn { background: #6d8a3f; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+
+        /* Rodapé */
+        footer { background-color: #333; color: #aaa; text-align: center; padding: 15px; font-size: 13px; margin-top: 40px; }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Ofertas do Dia</h1>
-        <a href="login.html" class="logout-btn">Sair</a>
-    </header>
-    
-    <div class="container">
-        <p class="sub-title">📍 Exibindo caixas surpresa disponíveis na sua região:</p>
+
+    <nav>
+        <div class="logo" onclick="window.location.reload()">🍽️ PratoDoDia</div>
+        <div class="nav-links">
+            <a href="#">Minhas Reservas</a>
+            <a href="#">Perfil</a>
+            <button class="btn-logout" onclick="window.location.href='login.html'">Sair</button>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div class="search-container">
+            <input type="text" placeholder="Buscar por estabelecimento ou tipo de comida (ex: Padaria)...">
+            <button>Buscar</button>
+        </div>
+
+        <p class="section-title">📍 Caixas Surpresa Disponíveis na sua Região:</p>
         
         <div class="card">
-            <div class="info-box">
+            <div class="info-side">
                 <h3>🍞 Padaria Central</h3>
-                <p><strong>Descrição:</strong> Mix de pães artesanais, croissants e doces assados no dia.</p>
-                <p class="price">De: <del>R$ 35,00</del> por <strong>R$ 12,50</strong></p>
-                <span class="badge">Restam apenas 2 caixas!</span>
+                <p class="desc">Mix do dia contendo pães artesanais, croissants folhados e doces variados assados pela manhã.</p>
+                <p class="prices">De: <del>R$ 35,00</del> por <strong>R$ 12,50</strong></p>
+                <span class="badge badge-red">Restam apenas 2 unidades!</span>
             </div>
-            <button class="btn-reserva" onclick="alert('Reserva realizada com sucesso na Padaria Central!')">Reservar</button>
+            <button class="btn-action" onclick="abrirConfirmacao('Padaria Central', 'R$ 12,50', 'Até às 19:00')">Reservar</button>
         </div>
 
         <div class="card">
-            <div class="info-box">
+            <div class="info-side">
                 <h3>🍎 Sacolão Boa Vista</h3>
-                <p><strong>Descrição:</strong> Caixa com frutas e verduras selecionadas (perfeitas para consumo imediato).</p>
-                <p class="price">De: <del>R$ 40,00</del> por <strong>R$ 15,00</strong></p>
-                <span class="badge badge-orange">Restam 5 caixas</span>
+                <p class="desc">Caixa sortida de hortifrúti contendo frutas da estação e legumes selecionados ideais para consumo rápido.</p>
+                <p class="prices">De: <del>R$ 40,00</del> por <strong>R$ 15,00</strong></p>
+                <span class="badge badge-orange">Restam 5 unidades</span>
             </div>
-            <button class="btn-reserva" onclick="alert('Reserva realizada com sucesso no Sacolão Boa Vista!')">Reservar</button>
+            <button class="btn-action" onclick="abrirConfirmacao('Sacolão Boa Vista', 'R$ 15,00', 'Até às 18:30')">Reservar</button>
         </div>
 
         <div class="card">
-            <div class="info-box">
+            <div class="info-side">
                 <h3>🍣 Sushi Takeaway</h3>
-                <p><strong>Descrição:</strong> Combinado variado de sushis e combinados preparados no almoço.</p>
-                <p class="price">De: <del>R$ 70,00</del> por <strong>R$ 25,00</strong></p>
-                <span class="badge">Resta apenas 1 caixa!</span>
+                <p class="desc">Combinado frio composto por sushis e makis variados produzidos frescos para o almoço do dia.</p>
+                <p class="prices">De: <del>R$ 70,00</del> por <strong>R$ 25,00</strong></p>
+                <span class="badge badge-red">Resta apenas 1 unidade!</span>
             </div>
-            <button class="btn-reserva" onclick="alert('Reserva realizada com sucesso no Sushi Takeaway!')">Reservar</button>
+            <button class="btn-action" onclick="abrirConfirmacao('Sushi Takeaway', 'R$ 25,00', 'Até às 15:00')">Reservar</button>
         </div>
     </div>
+
+    <div class="modal-overlay" id="modalPedido">
+        <div class="modal-box">
+            <h2>🎉 Reserva Confirmada!</h2>
+            <p id="modalTexto"></p>
+            <button class="modal-close-btn" onclick="fecharConfirmacao()">Entendi, obrigado!</button>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 PratoDoDia - Projeto Integrador de Economia Circular e Combate ao Desperdício.
+    </footer>
+
+    <script>
+        function abrirConfirmacao(estabelecimento, valor, horario) {
+            const texto = `Sua caixa surpresa no **${estabelecimento}** foi reservada com sucesso!<br><br>💰 **Valor a pagar no balcão:** ${valor}<br>⏰ **Horário limite para retirada:** ${horario}`;
+            document.getElementById('modalTexto').innerHTML = texto;
+            document.getElementById('modalPedido').style.display = 'flex';
+        }
+
+        function fecharConfirmacao() {
+            document.getElementById('modalPedido').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
