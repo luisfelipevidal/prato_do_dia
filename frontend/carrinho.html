@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PratoDoDia - Meu Carrinho</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f4f7f6; color: #333; display: flex; flex-direction: column; min-height: 100vh; }
+        
+        nav { background-color: #6d8a3f; color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        nav .logo { font-size: 22px; font-weight: bold; cursor: pointer; text-decoration: none; color: white; }
+
+        .container { max-width: 600px; width: 100%; margin: 40px auto; padding: 0 20px; flex: 1; }
+        
+        .checkout-card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        h2 { color: #556c32; margin-bottom: 20px; font-size: 22px; border-bottom: 2px solid #f4f7f6; padding-bottom: 10px; }
+        
+        .item-detalhe { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 16px; }
+        .item-detalhe span.label { color: #666; font-weight: 500; }
+        .item-detalhe span.valor { font-weight: bold; color: #222; }
+
+        .total-box { background-color: #eef2eb; padding: 15px; border-radius: 6px; margin: 25px 0; display: flex; justify-content: space-between; align-items: center; }
+        .total-box span { font-size: 18px; font-weight: bold; color: #556c32; }
+        .total-box .preco-final { font-size: 22px; color: #6d8a3f; }
+
+        .alerta-retirada { background-color: #fff9e6; border-left: 4px solid #ff9800; padding: 12px; border-radius: 4px; font-size: 14px; color: #666; margin-bottom: 25px; line-height: 1.4; }
+
+        .btn-finalizar { width: 100%; background-color: #6d8a3f; color: white; border: none; padding: 14px; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: bold; transition: background 0.2s; }
+        .btn-finalizar:hover { background-color: #556c32; }
+        .btn-cancelar { display: block; text-align: center; color: #999; margin-top: 15px; text-decoration: none; font-size: 14px; }
+        .btn-cancelar:hover { color: #ff4d4d; text-decoration: underline; }
+
+        /* Estilo da tela de sucesso pós-reserva */
+        .sucesso-container { display: none; text-align: center; animation: fadeIn 0.5s ease-in-out; }
+        .sucesso-container h1 { color: #6d8a3f; margin-bottom: 15px; }
+        .qr-code-placeholder { width: 150px; height: 150px; background: #ddd; margin: 20px auto; display: flex; justify-content: center; align-items: center; border-radius: 8px; font-size: 12px; color: #555; border: 2px dashed #6d8a3f; }
+        .codigo-pedido { font-size: 20px; font-weight: bold; color: #333; letter-spacing: 2px; background: #f4f7f6; padding: 10px; display: inline-block; border-radius: 4px; margin-bottom: 10px; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="home.html" class="logo">🍽️ PratoDoDia</a>
+    </nav>
+
+    <div class="container">
+        <div class="checkout-card" id="cardCheckout">
+            <h2>🛒 Resumo da Reserva</h2>
+            
+            <div class="item-detalhe">
+                <span class="label">Estabelecimento:</span>
+                <span class="valor" id="cart-loja">Carregando...</span>
+            </div>
+            <div class="item-detalhe">
+                <span class="label">Item selecionado:</span>
+                <span class="valor" id="cart-desc">Carregando...</span>
+            </div>
+            <div class="item-detalhe">
+                <span class="label">Forma de pagamento:</span>
+                <span class="valor" style="color: #6d8a3f;">Pagar no local</span>
+            </div>
+
+            <div class="alerta-retirada">
+                ⚠️ **Atenção:** Como trabalhamos combatendo o desperdício, você deve retirar seu pedido diretamente no balcão do estabelecimento parceiro até o horário limite informado.
+            </div>
+
+            <div class="total-box">
+                <span>Total a pagar:</span>
+                <span class="preco-final" id="cart-preco">R$ 0,00</span>
+            </div>
+
+            <button class="btn-finalizar" onclick="confirmarReserva()">Confirmar Reserva Grátis</button>
+            <a href="home.html" class="btn-cancelar">Desistir e Voltar</a>
+        </div>
+
+        <div class="checkout-card sucesso-container" id="cardSucesso">
+            <h1>🎉 Reserva Confirmada!</h1>
+            <p>Seu pedido foi registrado no sistema. Apresente o código ou QR Code abaixo no balcão para efetuar o pagamento com desconto.</p>
+            
+            <div class="qr-code-placeholder">
+                [📱 QR CODE SIMULADO]
+            </div>
+            
+            <p style="font-size: 14px; color: #666;">Código do pedido:</p>
+            <div class="codigo-pedido" id="codPedido">PDD-8942</div>
+            
+            <p style="color: #ff9800; font-weight: bold; margin-top: 15px;" id="cart-horario">Retirada até às --:--</p>
+            
+            <button class="btn-finalizar" style="margin-top: 25px;" onclick="window.location.href='home.html'">Voltar para a Home</button>
+        </div>
+    </div>
+
+    <script>
+        // Carrega as informações que vieram da página anterior (URL)
+        const urlParams = new URLSearchParams(window.location.search);
+        const loja = urlParams.get('loja') || "Estabelecimento";
+        const desc = urlParams.get('desc') || "Caixa Surpresa";
+        const preco = urlParams.get('preco') || "R$ 0,00";
+        const horario = urlParams.get('horario') || "19:00";
+
+        document.getElementById('cart-loja').innerText = loja;
+        document.getElementById('cart-desc').innerText = desc;
+        document.getElementById('cart-preco').innerText = preco;
+
+        function confirmarReserva() {
+            // Gera um número aleatório de pedido para simular o banco
+            const numAleatorio = Math.floor(1000 + Math.random() * 9000);
+            document.getElementById('codPedido').innerText = `PDD-${numAleatorio}`;
+            document.getElementById('cart-horario').innerText = `⏰ Retirar hoje impreterivelmente até às ${horario}`;
+            
+            // Esconde o carrinho e mostra a tela de sucesso
+            document.getElementById('cardCheckout').style.display = 'none';
+            document.getElementById('cardSucesso').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
