@@ -120,14 +120,15 @@
 
     <script>
         function abrirConfirmacao(estabelecimento, valor, horario) {
-            const texto = `Sua caixa surpresa no **${estabelecimento}** foi reservada com sucesso!<br><br>💰 **Valor a pagar no balcão:** ${valor}<br>⏰ **Horário limite para retirada:** ${horario}`;
-            document.getElementById('modalTexto').innerHTML = texto;
-            document.getElementById('modalPedido').style.display = 'flex';
-        }
+    // Define descrições padrão baseadas no local escolhido
+    let descricao = "Caixa Surpresa Diária";
+    if(estabelecimento.includes("Padaria")) descricao = "Kit de Pães e Doces Artesanais";
+    if(estabelecimento.includes("Sacolão")) descricao = "Caixa de Hortifrúti Selecionado";
+    if(estabelecimento.includes("Sushi")) descricao = "Combinado Variado de Sushis";
 
-        function fecharConfirmacao() {
-            document.getElementById('modalPedido').style.display = 'none';
-        }
+    // Redireciona para a nova tela do carrinho passando os dados pela URL
+    window.location.href = `carrinho.html?loja=${encodeURIComponent(estabelecimento)}&desc=${encodeURIComponent(descricao)}&preco=${encodeURIComponent(valor)}&horario=${encodeURIComponent(horario)}`;
+}
     </script>
 </body>
 </html>
